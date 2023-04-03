@@ -96,13 +96,13 @@ include 'sidebar.php';
                 <tbody>
                   <tr>
                    
-				    <th><i class="icon_profile"></i>Student Name</th>
+				             <th><i class="icon_profile"></i>Student Name</th>
                     <th><i class="icon_mail_alt"></i>  Email</th>
-					<th><i class="icon_mobile"></i> Reg no</th>
-                    <th><i class="icon_calendar"></i> Date of birth</th>
+					          <th><i class="icon_mobile"></i> Reg no</th>
                     <th><i class="icon_pin_alt"></i>Batch</th>
-					<th><i class="icon_pin_alt"></i>Semester </th>
-					 <th><i class="icon_cogs"></i> Delete</th>
+					          <th><i class="icon_pin_alt"></i>Semester </th>
+                    <th><i class="icon_calendar"></i> Section</th>
+					          <th><i class="icon_cogs"></i> Delete</th>
                   </tr>
 				  <?php
 				  // $sub=mysqli_query($confaculty,"SELECT * FROM subject  WHERE sid =" .$s_code); 
@@ -115,10 +115,10 @@ include 'sidebar.php';
          $s_name=$row['sname'];
         $s_email = $row['smail'];
 		$s_reg = $row['sreg'];
-        $s_dob=$row['sdob'];
-        $s_batch = $row['sbatch'];
+         $s_batch = $row['sbatch'];
         $s_sem=$row['ssem'];
-	 
+	      $s_sec=$row['ssec'];
+       
 	//  $fid = $row['fid'];
 	// 	 $fnm = $row['fname'];
 	// 	  $fmail = $row['fmail'];
@@ -134,9 +134,10 @@ include 'sidebar.php';
                     <td><?php echo $s_name; ?></td>
                     <td><?php echo $s_email; ?></td>
                     <td><?php echo $s_reg; ?></td>
-                    <td><?php echo $s_dob; ?></td>
-				    <td><?php echo $s_batch; ?></td>
-				    <td><?php echo $s_sem; ?></td>
+                    <td><?php echo $s_batch; ?></td>
+				            <td><?php echo $s_sem; ?></td>
+                    <td><?php echo $s_sec; ?></td>
+				    
 					 <td>
                    
                     

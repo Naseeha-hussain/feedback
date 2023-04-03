@@ -27,8 +27,11 @@ $sql1 = "DELETE FROM subject WHERE sid = ' $s_code'";
 $result=mysqli_query($confaculty,$sql1);
 $msg="Subject Deleted";
 	 echo "<script type='text/javascript'>alert('$msg');</script>"; 
-
+{
+header("location: view-subject.php");
+}
 	}
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">

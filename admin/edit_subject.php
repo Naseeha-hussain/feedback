@@ -26,8 +26,9 @@ $subject_name=$_POST['subject_name'];
 //$subject_code=$_POST['subject_code'];
 $year=$_POST['year'];
 $semester=$_POST['semester'];
+$section=$_POST['section'];
     
-$sql1 = "UPDATE subject SET sname = '$subject_name', ssem= '$semester', sy = '$year' WHERE sid = ' $s_code'";
+$sql1 = "UPDATE subject SET sname = '$subject_name', ssem= '$semester', sy = '$year' WHERE sid = ' $s_code' && sec ='$s_sec'";
 //echo $sql1;
 $result=mysqli_query($confaculty,$sql1);
 $msg="Subject Updated";
@@ -109,12 +110,13 @@ include 'sidebar.php';
 						
  while($row=mysqli_fetch_assoc($subj))
 	 {
-	 $s_c = $row['sid'];
-		 $sname = $row['sname'];
-		  $s_code = $row['scode'];
-		   $s_sem = $row['ssem'];
-		    $s_yr = $row['sy'];
-			$s_faculty = $row['sfaculty'];
+	     $s_c = $row['sid'];
+		   $sname = $row['sname'];
+		   $s_code = $row['scode'];
+		   $s_yr = $row['sy'];
+       $s_sem = $row['ssem'];
+       $s_sec = $row['sec'];
+			 $s_faculty = $row['sfaculty'];
 			
 	// $ncid = md5($id);
 	 } 
@@ -147,11 +149,11 @@ include 'sidebar.php';
                     <div class="col-sm-10">
                       <select class="form-control m-bot15" name="year">
                                               <option><?php echo $s_yr; ?></option>
-											  <option>1</option>
+											                        <option>1</option>
                                               <option>2</option>
-											  <option>3</option>
+											                        <option>3</option>
                                               <option>4</option>
-                                             <option>5</option>
+                                              <option>5</option>
                                              
                                           </select>
                     </div>
@@ -169,18 +171,13 @@ include 'sidebar.php';
 											                        <option>6</option>
                                               <option>7</option>
 											                        <option>8</option>
-                                              <option>9</option>
-                                             <option>10</option>
-                                             
-                                          </select>
+                      </select>
                     </div>
                   </div>
-				
-				  <div class="form-group">
-                    <label class="col-sm-2 control-label"><img src="captcha1.php"></label>
+            <div class="form-group">
+                    <label class="col-sm-2 control-label">Section </label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="vercode">
-                      <span class="help-block">Enter the Code in the box to continue .( To let us know you are not a robot)</span>
+                      <input type="text" class="form-control" name="section" readonly="" value="<?php echo $s_sec; ?>"  required>
                     </div>
                   </div>
 				    <button type="submit" class="btn btn-primary" name="add-faculty">Submit</button>
@@ -197,18 +194,7 @@ include 'sidebar.php';
        
                       <!--color picker end-->
 
-    <!--main content end-->
-    <div class="text-center">
-      <div class="credits">
-          <!--
-            All the links in the footer should remain intact.
-            You can delete the links only if you purchased the pro version.
-            Licensing information: https://bootstrapmade.com/license/
-            Purchase the pro version form: https://bootstrapmade.com/buy/?theme=NiceAdmin
-          -->
-          Designed by <a href="https://www.noidatut.com/">Dr. Aadarsh Malviya</a>
-        </div>
-    </div>
+   
   </section>
   <!-- container section end -->
   <!-- javascripts -->

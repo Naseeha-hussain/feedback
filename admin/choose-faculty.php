@@ -3,8 +3,15 @@
     { 
         session_start(); 
     } 
-
+if (isset($_SESSION["success"])) {
+     $msg="Feedback Submitted,Thank You";
+					 echo "<script type='text/javascript'>alert('$msg');</script>";
+					  unset($_SESSION['success']);
+    }
 require_once('fcon.php');
+ $t = "SELECT DISTINCT ssem FROM Subject ORDER BY ssem ASC"; 
+   $sem = mysqli_query($confaculty, $t);
+        
 // if(isset($_POST["add-faculty"])){ 
 
 // $faculty_name=$_POST['faculty'];
@@ -15,8 +22,13 @@ require_once('fcon.php');
 if (isset($_POST["add-faculty"])) {
 
   $_SESSION['batch'] = $_POST['batch'];
-  $semno = $_POST['semno'];
-  $_SESSION['semno'] = $semno;
+  
+  $_SESSION['subj'] = $_POST['subj'];
+  $_SESSION['sem'] = $_POST['sem'];
+  $sem = $_POST['sem'];
+  $_SESSION['sem'] = $sem;
+  $_SESSION['sec'] = $_POST['sec'];
+   
 
   header("Location: choose_subject.php");
 }
@@ -59,8 +71,45 @@ if (isset($_POST["add-faculty"])) {
   <!-- Custom styles -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet" />
-
- 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+$(document).ready(function(){
+    $('#semno').on('change', function(){
+        var SemID = $(this).val();
+        if(SemID){
+            $.ajax({
+                type:'POST',
+                url:'ajaxData.php',
+                data:'ssem='+SemID,
+                success:function(html){
+                    $('#subj').html(html);
+                    $('#faculty').html('<option value="">Select subject first</option>'); 
+                }
+            }); 
+        }else{
+            $('#subj').html('<option value="">Select Semester first</option>');
+            $('#faculty').html('<option value="">Select Subject first</option>'); 
+        }
+    });
+    
+    // $('#subj').on('change', function(){
+    //     var SubjID = $(this).val();
+    //     if(SubjID){
+    //         $.ajax({
+    //             type:'POST',
+    //             url:'ajaxData.php',
+    //             data:'s_name='+SubjID,
+    //             success:function(html){
+    //                 $('#faculty').html(html);
+    //             }
+    //         }); 
+    //     }
+    //     else{
+    //         $('#faculty').html('<option value="">Select  first</option>'); 
+    //     }
+    // });
+});
+</script>
 </head>
 
 <body>
@@ -99,10 +148,10 @@ include 'sidebar-st.php';
               <header class="panel-heading">
                 Select Dept
               </header>
-              <form class="form-horizontal " enctype="multipart/form-data" method="post">
+              <form class="form-horizontal" enctype="multipart/form-data" method="post">
               <div class="form-group">
-                    <div class="col-sm-2 control-label">Batch </div>
-                    <div class="col-sm-10">
+                     <div class="col-sm-2 control-label">Batch </div>
+                    <div class="col-sm-8">
                       <select class="form-control m-bot15" name="batch" required>
 					  <option></option> 
             <option>2020-24</option> 
@@ -112,60 +161,41 @@ include 'sidebar-st.php';
 </div>    
            <div class="form-group">
                     <div class="col-sm-2 control-label">semester</div>
-                    <div class="col-sm-10">
-                      <select class="form-control m-bot15" name="semno" required>
-					  <option></option> 
-            <option>1</option> 
-            <option>2</option>
-            <option>3</option> 
-            <option>4</option>
-            <option>5</option> 
-            <option>6</option>
-            <option>7</option> 
-            <option>8</option>  
-</select>
-</div>
-</div>
-			   <!--<div class="form-group">
-                    <label class="col-sm-2 control-label">Select Faculty </label>
-                    <div class="col-sm-10">
-                      <select class="form-control m-bot15" name="faculty">
-					  <option></option>
- <?php 
-						/*$subject_code=mysqli_query($confaculty,"SELECT * FROM faculty where status = 'Active'"); 
-						$numrows1=mysqli_num_rows($subject_code);						
-						
- while($row=mysqli_fetch_assoc($subject_code))
-	 {
-	 $f_code = $row['fid'];
-		 $fname = $row['fname'];
-		  $f_email = $row['fmail'];
-		   $f_mobile = $row['fmob'];
-		    $f_qual = $row['fqual'];
-			 $f_exp = $row['fexp'];
-			  $f_sp = $row['specialization'];
-			   $f_pic = $row['pic'];
-			    $f_desig = $row['designation'];
-				 $f_status = $row['status'];
-				  $f_date = $row['date'];
-	// $ncid = md5($id);
-	 //} 
-						?>                                              <option><?php echo $fname; ?></option>
-						<?php }*/ ?>
-                                             
-                                           
+                    <div class="col-sm-8">
+                      <select id="semno" class="form-control m-bot15" name="sem" required>
+                       <option value="">Select Sem</option>
+                       <?php 
+                            if($sem->num_rows > 0){ 
+                              while($row = $sem->fetch_assoc()){  
+                                    echo '<option value="'.$row['ssem'].'">'.$row['ssem'].'</option>'; 
+                              } 
+                            }else{ 
+                                echo '<option value="">Sem not available</option>'; 
+                            } 
+                      ?>
+                  </select>
+					  </div>
+          </div>
+          <div class="form-group">
+                  <label class="col-sm-2 control-label">Select Subject</label>
+                  <div class="col-sm-8">
+                    <select id="subj" class="form-control m-bot15" name="subj" required >
+                      <option value="">Select Semester First</option> 
                     </select>
+                    </div> 
                     </div>
-                  </div>-->
-				    <!-- <div class="form-group">
-                    <label class="col-sm-2 control-label"></label>
-                    <div class="col-sm-10">
-                     
+                    
+          <div class="form-group">
+                  <label class="col-sm-2 control-label">Select Section</label>
+                  <div class="col-sm-8">
+                    <select id="section" class="form-control m-bot15" name="sec" required >
+                      <option></option> 
+                      <option value="A">A</option> 
+                      <option value="B">B</option> 
+                    
+                    </select>
+                    </div> 
                     </div>
-                  </div> -->
-				  
-				
-				
 				    <button type="submit" class="btn btn-primary" name="add-faculty">Submit</button>
                 </form>
               </div>

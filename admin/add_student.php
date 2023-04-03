@@ -10,9 +10,9 @@ if(isset($_POST["add-student"])){
 $student_name=$_POST['student-name'];
 $student_email=$_POST['student-email'];
 $student_reg=$_POST['student-reg'];
-$student_dob=$_POST['student-dob'];
 $student_batch=$_POST['student-batch'];
 $student_sem=$_POST['student-sem'];
+$student_sec=$_POST['student-sec'];
 
 if(strlen($student_name)>=3){}
     
@@ -28,21 +28,21 @@ $q=mysqli_query($confaculty,"SELECT * FROM student WHERE smail='".$student_email
 	//echo $messag;
     else 
 	{
-         $sql="INSERT INTO student(sname,smail,sreg,sdob,sbatch,ssem) VALUES('$student_name','$student_email','$student_reg','$student_dob','$student_batch','$student_sem')";
+         $sql="INSERT INTO student(sname,smail,sreg,sbatch,ssem,ssec) VALUES('$student_name','$student_email','$student_reg','$student_batch','$student_sem','$student_sec')";
 	// echo $sql;
 		//$target = "images/".basename($image);
 		//$tar = basename($image);
 		//$check = getimagesize($_FILES["image"]["tmp_name"]);
-		 $ext = pathinfo($target, PATHINFO_EXTENSION);
-	$d = "png";
-	 $e = "jpeg";
-	 $f = "jpg";
+	// 	 $ext = pathinfo($target, PATHINFO_EXTENSION);
+	// $d = "png";
+	//  $e = "jpeg";
+	//  $f = "jpg";
 	
-	// echo $ext;
-	 if  ( $ext == $e or $ext == $f or $ext == $d  )
-	 {
-		move_uploaded_file($_FILES['image']['tmp_name'], $target);
-		}
+	// // echo $ext;
+	//  if  ( $ext == $e or $ext == $f or $ext == $d  )
+	//  {
+	// 	move_uploaded_file($_FILES['image']['tmp_name'], $target);
+	// 	}
 		$result=mysqli_query($confaculty,$sql);
 		$msg="student Added";
 	 echo "<script type='text/javascript'>alert('$msg');</script>"; 
@@ -142,7 +142,7 @@ include 'sidebar.php';
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Student Email </label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="student-email" required>
+                      <input type="email" class="form-control" name="student-email" required>
                     </div>
                   </div>
                   
@@ -152,26 +152,24 @@ include 'sidebar.php';
                       <input type="text" class="form-control" name="student-reg">
                     </div>
                   </div>
-                
-                  
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Date of birth</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" name="student-dob">
-                    </div>
-                  </div>
 				    
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Batch </label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="student-batch">
+                      <input type="text" class="form-control" name="student-batch" required>
                     </div>
                   </div>
 				   
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Semester </label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="student-sem">
+                      <input type="text" class="form-control" name="student-sem" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Section</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="student-sec" required>
                     </div>
                   </div>
 				   
@@ -187,17 +185,10 @@ include 'sidebar.php';
                       <select class="form-control m-bot15" name="status">
                                               <option>Active</option>
                                               <option>Deactive</option>
--->
                                           </select> 
                     </div>
-                  </div>
-				   <!-- <div class="form-group">
-                    <label class="col-sm-2 control-label"><img src="captcha1.php"></label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" name="vercode">
-                      <span class="help-block">Enter the Code in the box to continue .( To let us know you are not a robot)</span>
-                    </div>
-                  </div> -->
+                  </div>-->
+				
 				    <button type="submit" class="btn btn-primary" name="add-student">Submit</button>
                 </form>
               </div>

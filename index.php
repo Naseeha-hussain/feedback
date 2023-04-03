@@ -3,11 +3,7 @@
     { 
         session_start(); 
     } 
-	 if (isset($_SESSION["feedback"])) {
-     $msg="Feedback Submitted,Thank You";
-					 echo "<script type='text/javascript'>alert('$msg');</script>";
-					  unset($_SESSION['feedback']);
-    }
+	 
 	require_once('./admin/fcon.php');
 	if(isset($_POST["submit"])){ 
 		$reg = $_POST['reg'];
@@ -24,6 +20,7 @@
 			if($sname==$name){
 				$_SESSION["sname"] = $_POST['name'];
 				$_SESSION["sreg"] = $_POST['reg'];
+				//header("location: admin/header-st.php")
 				header("location: admin/choose-faculty.php");
 			}
 			else{
@@ -50,7 +47,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <meta property="og:image" content="images/faculty-feedback">
 <meta name="keywords" content="Faculty feedbackback, faculty feedback system in php mysql, free download faculty feedback system, faculty feedback management system " />
- <link rel="shortcut icon" href="https://noidatut.com/gs-title.ico"/>
+
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //custom-theme -->

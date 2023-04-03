@@ -90,7 +90,7 @@ if(isset($_POST["fc_submit"])){
 
   <!-- container section start -->
   <section id="container" class="">
-   <?php include 'header.php';
+   <?php include 'header-fc.php';
 include 'sidebar-fc.php';
  ?>
     <!--sidebar end-->
@@ -103,7 +103,7 @@ include 'sidebar-fc.php';
             <h3 class="page-header"><i class="fa fa-file-text-o"></i> Faculty Data</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-              <li><i class="icon_document_alt"></i>Admin</li>
+              <li><i class="icon_document_alt"></i>Faculty</li>
               <li><i class="fa fa-file-text-o"></i>Feedback</li>
             </ol>
           </div>

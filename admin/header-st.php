@@ -2,6 +2,7 @@
  if(!isset($_SESSION)) 
     { 
         session_start(); 
+        //$name = $_SESSION["name"];
     }
  if (!isset($_SESSION["admin"])) {
  	$_SESSION["logout"] = "Logged out " ;			
@@ -16,7 +17,7 @@
       </div>
 
       <!--logo start-->
-      <a href="https://noidatut.com/" class="logo">Feedback<span class="lite">Form</span></a>
+      <a href="#" class="logo">Feedback<span class="lite">Form</span></a>
       <!--logo end-->
 
       <div class="top-nav notification-row">
@@ -31,7 +32,7 @@
                             <span class="profile-ava">
                                 <img alt="" src="images/profile.png" width="25">
                             </span>
-                            <span class="username">Guest</span>
+                            <span class="username">Student</span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -50,9 +51,6 @@
               </li> -->
               <li>
                 <a href="../index.php"><i class="icon_key_alt"></i> Log Out</a>
-              </li>
-              <li>
-                <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
               </li>
               <!-- <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>

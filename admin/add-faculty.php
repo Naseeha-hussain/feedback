@@ -17,7 +17,7 @@ $faculty_designation=$_POST['faculty-designation'];
 $experience=$_POST['experience'];
 $status=$_POST['status'];
 //$image=$_POST['image'];
-$image = $_FILES['image']['name'];
+//$image = $_FILES['image']['name'];
     
 $q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fmail='".$faculty_email."' "); 
 	$numrows1=mysqli_num_rows($q);
@@ -31,21 +31,21 @@ $q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fmail='".$faculty_email
 	//echo $messag;
     else 
 	{
-	 $sql="INSERT INTO faculty(fcid,fname,fmail,fmob,fqual,fexp,specialization,pic,designation,status,date) VALUES($faculty_id,'$faculty_name','$faculty_email','$faculty_mobile','$faculty_qualification','$experience','$faculty_specialization','$image','$faculty_designation','$status',now())";
+	 $sql="INSERT INTO faculty(fcid,fname,fmail,fmob,fqual,fexp,specialization,designation,status,date) VALUES($faculty_id,'$faculty_name','$faculty_email','$faculty_mobile','$faculty_qualification','$experience','$faculty_specialization','$faculty_designation','$status',now())";
 	// echo $sql;
-		$target = "images/".basename($image);
-		//$tar = basename($image);
-		//$check = getimagesize($_FILES["image"]["tmp_name"]);
-		 $ext = pathinfo($target, PATHINFO_EXTENSION);
-	$d = "png";
-	 $e = "jpeg";
-	 $f = "jpg";
+	// 	$target = "images/".basename($image);
+	// 	//$tar = basename($image);
+	// 	//$check = getimagesize($_FILES["image"]["tmp_name"]);
+	// 	 $ext = pathinfo($target, PATHINFO_EXTENSION);
+	// $d = "png";
+	//  $e = "jpeg";
+	//  $f = "jpg";
 	
-	// echo $ext;
-	 if  ( $ext == $e or $ext == $f or $ext == $d  )
-	 {
-		move_uploaded_file($_FILES['image']['tmp_name'], $target);
-		}
+	// // echo $ext;
+	//  if  ( $ext == $e or $ext == $f or $ext == $d  )
+	//  {
+	// 	move_uploaded_file($_FILES['image']['tmp_name'], $target);
+	// 	}
 		$result=mysqli_query($confaculty,$sql);
 		$msg="Faculty Added";
 	 echo "<script type='text/javascript'>alert('$msg');</script>"; 

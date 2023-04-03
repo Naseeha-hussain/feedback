@@ -53,12 +53,7 @@ $q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fmail='".$faculty_email
   <meta charset="utf-8">
    <meta property="og:image" content="images/faculty.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Faculty Feedback system in php mysql contact form">
-  <meta name="author" content="Dr Tutorial NoidaTut">
-  <meta name="keyword" content="free download faculty feedback, faculty feedback management system in php mysql, feedback system in php mysql">
-  <link rel="shortcut icon" href="https://noidatut.com/gs-title.ico"/>
-  <meta property="og:image" content="http://noidatut.com/dashboard/noida-tut-fav.JPG">
-
+  
   <title>Subject List</title>
 
   <!-- Bootstrap CSS -->
@@ -127,14 +122,15 @@ include 'sidebar.php';
                 <tbody>
                   <tr>
                    
-				    <th><i class="icon_profile"></i> Subject Name</th>
+				            <th><i class="icon_profile"></i> Subject Name</th>
                     <th><i class="icon_calendar"></i> Subject Code</th>
+                    <th><i class="icon_mobile"></i> year</th>
                     <th><i class="icon_mail_alt"></i> Semester</th>
-					     <th><i class="icon_mobile"></i> year</th>
-                    <th><i class="icon_pin_alt"></i> Faculty</th>
-					              <th><i class="icon_pin_alt"></i> Allot Faculty</th>
+                    <th><i class="icon_mobile"></i> section</th>
+					          <th><i class="icon_pin_alt"></i> Faculty</th>
+					          <th><i class="icon_pin_alt"></i> Allot Faculty</th>
                     <th><i class="icon_cogs"></i> Edit Subject</th>
-					 <th><i class="icon_cogs"></i> Delete Subject</th>
+					          <th><i class="icon_cogs"></i> Delete Subject</th>
                   </tr>
 				  <?php 
 						$subj=mysqli_query($confaculty,"SELECT * FROM subject"); 
@@ -142,12 +138,13 @@ include 'sidebar.php';
 						
  while($row=mysqli_fetch_assoc($subj))
 	 {
-	 $s_c = $row['sid'];
-		 $sname = $row['sname'];
-		  $s_code = $row['scode'];
-		   $s_sem = $row['ssem'];
-		    $s_yr = $row['sy'];
-			$s_faculty = $row['sfaculty'];
+	     $s_c = $row['sid'];
+		   $sname = $row['sname'];
+		   $s_code = $row['scode'];
+		   $s_yr = $row['sy'];
+       $s_sem = $row['ssem'];
+		   $s_sec = $row['sec'];
+			 $s_faculty = $row['sfaculty'];
 			
 	// $ncid = md5($id);
 	 //} 
@@ -156,27 +153,21 @@ include 'sidebar.php';
 				 
                     <td><?php echo  $sname; ?></td>
                     <td><?php echo $s_code; ?></td>
-                    <td><?php echo $s_sem; ?></td>
                     <td><?php echo $s_yr; ?></td>
+                    <td><?php echo $s_sem; ?></td>
+                    <td><?php echo $s_sec; ?></td>
                     <td><?php echo $s_faculty; ?></td>
 					 <td> <div class="btn-group">
                        <a class="btn btn-success" href="allot_faculty.php?fc=<?php echo $s_c;?>" target="_blank"><i class="icon_check_alt2"></i></a>
-                       
-                        
                       </div></td>
-					
                     <td>
                       <div class="btn-group">
                         <a class="btn btn-primary" href="edit_subject.php?kc=<?php echo $s_c;?>" target="_blank"><i class="icon_plus_alt2"></i></a>
-                       
-                        
                       </div>
                     </td>
 					 <td>
                       <div class="btn-group">
-                        <a class="btn btn-danger" href="delete_subject.php?fc=<?php echo $s_c;?>"><i class="icon_close_alt2"></i></a>
-                       
-                        
+                        <a class="btn btn-danger" href="delete_subject.php?fc=<?php echo $s_c;?>"><i class="icon_close_alt2"></i></a> 
                       </div>
                     </td>
                   </tr>
@@ -198,10 +189,6 @@ include 'sidebar.php';
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script><br>
             </section>
-          
-           
-          
-
           </div>
         </div>
 

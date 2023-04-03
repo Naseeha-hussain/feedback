@@ -57,7 +57,7 @@ require_once('fcon.php');
 
   <!-- container section start -->
   <section id="container" class="">
-   <?php include 'header.php';
+   <?php include 'header-fc.php';
 include 'sidebar-fc.php';
  ?>
     <!--sidebar end-->
@@ -93,6 +93,7 @@ include 'sidebar-fc.php';
                 Report
               </header>
               <div class="panel-body">
+                <form name="report"  method="POST">
                 <h3><center>UNIVERSITY COLLEGE OF ENGINEERING-BIT CAMPUS</center></h3>
                 <h4><center>Faculty REPORT</center></h4>
                 <ul>
@@ -124,14 +125,18 @@ include 'sidebar-fc.php';
    }
    $stotal=$stotal/$numrows1;
    $spun = $spun/$numrows1;
-   $datapoints = array(array("y"=>$spun,"label"=>"Punc"));
+   $datapoints = array(array("y"=>$total,"label"=>"total"),array("y"=>$stotal,"label"=>"Average"),array("y"=>$con,"label"=>"Concept"));
 
             ?>				
             <li>Subject = <?php echo $sub?></li>	
             <li>No of Feedback = <?php echo $numrows1?></li>
             <li>Average(/45) = <?php echo $stotal?></li>
   </ul>
-  <!-- <div id ="chartContainer" style="height:370px ;width: 100%;"></div>
+  </form>
+  <a href="../TCPDF-main/generatepdf.php"><input class="btn btn-primary" name="submitpdf" value="Download PDF"></a>
+
+
+  <div id ="chartContainer" style="height:370px ;width: 100%;"></div>
   <script>
     window.onload = function(){
       var chart = new CanvasJS.Chart("chartContainer",{
@@ -145,13 +150,19 @@ include 'sidebar-fc.php';
         },
         data:[{
           type:"bar",
+          indexLabelPlacement: "inside",
+          indexLabelFontWeight: "bolder",
+          indexLabelFontColor: "White",
           dataPoints:
           <?php echo json_encode($datapoints,JSON_NUMERIC_CHECK);?>
         }]
       });
       chart.render();
     } 
-  </script>-->
+  </script>
+  <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
               <!-- <table class="table table-striped table-advance table-hover">
                 <tbody>
                   <tr>

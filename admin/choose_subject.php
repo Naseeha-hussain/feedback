@@ -1,13 +1,22 @@
-<?php 
+<?php
+require_once('fcon.php'); 
  if(!isset($_SESSION)) 
     { 
         session_start(); 
+                     $t="SELECT sfaculty from subject WHERE sname='" . $_SESSION["subj"] . "' && sec='".$_SESSION["sec"]."' ";
+                      $faculty = mysqli_query($confaculty, $t);
+                      //$numrows1 = mysqli_num_rows($subject_code);
+
+                      while ($row = mysqli_fetch_assoc($faculty)) {
+                        $fname = $row['sfaculty'];}
+                        // $ncid = md5($id);
+                    
 		//$faculnm = $_SESSION["facultynm"];
     //$_SESSION["facultynm"];
 	} 
 	
 //$uid = $_SESSION["userid"] ;
-require_once('fcon.php');
+
 if(isset($_POST["add-faculty"])){ 
 
 $faculty_name=$_POST['faculty-name'];
@@ -19,11 +28,12 @@ if(isset($_POST["feedback"])){
 
   $stnm = $_SESSION['sname'];
   $stem = $_SESSION['sreg'];
+  $batch = $_SESSION['batch'];
+  $sem = $_SESSION['sem'];
+	$subj=$_SESSION['subj'];
+	$sec=$_SESSION['sec'];
   
-  $batch = $_POST['batch'];
-  $sem = $_POST['sem'];
-	$faculty=$_POST['faculty'];
-	$subj=$_POST['subj'];
+  $faculty=$fname;
 	$punctuality=$_POST['punctuality'];
 	$conceptual=$_POST['conceptual'];
 	$elequant=$_POST['elequant'];
@@ -34,10 +44,10 @@ if(isset($_POST["feedback"])){
   $feedform=$_POST['feedform'];
   $advice=$_POST['advice'];
 	//$feedback=$_POST['feedback'];
-	$sql="INSERT INTO feedback(batch,sem,stnm,stem,fnm,sub,pun,con,eleq,syll,approach,grading,clk,fbf,adv,date) VALUES('$batch','$sem','$stnm','$stem','$faculty','$subj',$punctuality,$conceptual,$elequant,$syllabus,$approachable,$grading,$clarity,$feedform,$advice,now())";
+	$sql="INSERT INTO feedback(batch,sem,sec,stnm,stem,fnm,sub,pun,con,eleq,syll,approach,grading,clk,fbf,adv,date) VALUES('$batch','$sem','$sec','$stnm','$stem','$faculty','$subj',$punctuality,$conceptual,$elequant,$syllabus,$approachable,$grading,$clarity,$feedform,$advice,now())";
 	$result=mysqli_query($confaculty,$sql);
-		$_SESSION["feedback"] = "Thank You for your valuable time " ;			
-			header("location: ../index.php");
+		$_SESSION["success"] = "Thank You for your valuable time " ;			
+			header("location: ./choose-faculty.php");
 }
 
 ?>
@@ -46,7 +56,6 @@ if(isset($_POST["feedback"])){
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:image" content="http://noidatut.com/dashboard/noida-tut-fav.JPG">
   <title>Enter Feedback in Faculty Feedback section php mysql</title>
 
   <!-- Bootstrap CSS -->
@@ -73,7 +82,8 @@ if(isset($_POST["feedback"])){
 
   <!-- container section start -->
   <section id="container" class="">
-   <?php include 'header-st.php';
+   <?php
+   include 'header-st.php';
 include 'sidebar-st.php';
  ?>
     <!--sidebar end-->
@@ -99,71 +109,40 @@ include 'sidebar-st.php';
               </header>
               <form class="form-horizontal " enctype="multipart/form-data" method="post">
                 <div class="form-group">
-                  <div class="col-sm-2 control-label">Batch</div>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="batch" readonly value="<?php $batch = $_SESSION["batch"];
-                                                                                          echo $batch; ?>">
+                <table class="table table-advance table-hover" style="width:50%">
+                <div class="col-sm-1 control-label"></div>
+                <p>Marking Scheme</p>
+                <div class="col-sm-1 control-label"></div>
+                  <tr>
+                  <th><i>Mark</i></th>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>3</td>
+                  <td>4</td>
+                  <td>5</td>
+                  </tr>
+                    <tr>
+                      <th><i>values</i></th>
+                      <td>Very poor</td>
+                      <td>Poor</td>
+                      <td>Average</td>
+                      <td>Good</td>
+                      <td>Excellent</td>
+                    </tr>
+                      </table>
                   </div>
-</div>
-                  <div class="form-group">
-                  <div class="col-sm-2 control-label">Semester</div>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="sem" readonly value="<?php $sem = $_SESSION["semno"];
-                                                                                        echo $sem; ?>">
-                  </div>
-                </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Select Subject</label>
-                  <div class="col-sm-9">
-                    <select class="form-control m-bot15" name="subj">
-                      <option></option>
-                      <?php
-                      $t = "SELECT * FROM subsem WHERE sem ='" . $_SESSION["semno"] . "'";
-                      $subjects = mysqli_query($confaculty, $t);
-                      //$numrows1 = mysqli_num_rows($subject_code);
-
-                      while ($row = mysqli_fetch_assoc($subjects)) {
-                        $sub = $row['sub'];
-
-                        // $ncid = md5($id);
-                        
-                      ?> <option><?php echo $sub; ?></option>
-                      <?php } ?>
-
-
-                    </select>
-
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">Select Faculty</label>
-                  <div class="col-sm-9">
-                    <select class="form-control m-bot15" name="faculty">
-                      <option></option>
-                      <?php
-                      $t = "SELECT * FROM faculty WHERE status='Active'";
-                      $subjects = mysqli_query($confaculty, $t);
-                      //$numrows1 = mysqli_num_rows($subject_code);
-
-                      while ($row = mysqli_fetch_assoc($subjects)) {
-                        $fname = $row['fname'];
-
-                        // $ncid = md5($id);
-                         
-                      ?> <option><?php echo $fname; ?></option>
-                      <?php } ?>
-
-
-                    </select>
-
-                  </div>
-  
+                     <label class="col-sm-2 control-label">Faculty</label>
+                      <div class="col-sm-5" style="padding: 7px;">
+                        <?php echo $fname?>                  
+                      </div>
+                  </div>   
              
 				     <div class="form-group">
                     <label class="col-sm-2 control-label">Syllabus coverage</label>
                     <div class="col-sm-10">
-                    <p class="help-block">Has the teacher covered entire syllabus. Please rate out of 5</p>
-                     <input type="radio" name="punctuality" value="1" style="margin-right:10px; margin-left:10px">Very poor
+                    <p class="help-block">Has the teacher covered entire syllabus?</p>
+                     <input type="radio" name="punctuality" value="1" style="margin-right:10px; margin-left:10px" required>Very poor
                     <input type="radio" name="punctuality" value="2" style="margin-right:10px; margin-left:10px">Poor
                     <input type="radio" name="punctuality" value="3" style="margin-right:10px; margin-left:10px">Good
                     <input type="radio" name="punctuality" value="4" style="margin-right:10px; margin-left:10px">Very Good
@@ -173,8 +152,8 @@ include 'sidebar-st.php';
 				    <div class="form-group">
                     <label class="col-sm-2 control-label">Extra information </label>
                     <div class="col-sm-10">
-                    <p class="help-block">Has the staff covered relevent topic beyond syllabus? Please rate out of 5</p>
-                      <input type="radio" name="conceptual" value="1" style="margin-right:10px; margin-left:10px">Very poor
+                    <p class="help-block">Has the staff covered relevent topic beyond syllabus?</p>
+                      <input type="radio" name="conceptual" value="1" style="margin-right:10px; margin-left:10px" required>Very poor
                     <input type="radio" name="conceptual" value="2" style="margin-right:10px; margin-left:10px">Poor
                     <input type="radio" name="conceptual" value="3" style="margin-right:10px; margin-left:10px">Good
                     <input type="radio" name="conceptual" value="4" style="margin-right:10px; margin-left:10px">Very Good
@@ -186,7 +165,7 @@ include 'sidebar-st.php';
                     <div class="col-sm-10">
                       <p class="help-block">Effectiveness of staff in terms of:</p>
                     <p class="help-block">(a)Technical content (b)Communication skills (c)Use of Teaching aids.</p>
-                     <input type="radio" name="elequant" value="1" style="margin-right:10px; margin-left:10px">Very poor
+                     <input type="radio" name="elequant" value="1" style="margin-right:10px; margin-left:10px" required>Very poor
                     <input type="radio" name="elequant" value="2" style="margin-right:10px; margin-left:10px">Poor
                     <input type="radio" name="elequant" value="3" style="margin-right:10px; margin-left:10px">Good
                     <input type="radio" name="elequant" value="4" style="margin-right:10px; margin-left:10px">Very Good
@@ -197,9 +176,8 @@ include 'sidebar-st.php';
 				   <div class="form-group">
                     <label class="col-sm-2 control-label">Course content </label>
                     <div class="col-sm-10">
-                    <p class="help-block">Pace on which contents were covered? Please rate out of 5</p>
-                      <p class="help-block">Pace on which contents were covered</p>
-                    <input type="radio" name="syllabus" value="1" style="margin-right:10px; margin-left:10px">Very poor
+                    <p class="help-block">Pace on which contents were covered.</p>
+                    <input type="radio" name="syllabus" value="1" style="margin-right:10px; margin-left:10px" required>Very poor
                     <input type="radio" name="syllabus" value="2" style="margin-right:10px; margin-left:10px">Poor
                     <input type="radio" name="syllabus" value="3" style="margin-right:10px; margin-left:10px">Good
                     <input type="radio" name="syllabus" value="4" style="margin-right:10px; margin-left:10px">Very Good
@@ -210,8 +188,8 @@ include 'sidebar-st.php';
                   <div class="form-group">
              <label class="col-sm-2 control-label">Motivation</label>
                     <div class="col-sm-10">
-                    <p class="help-block">Motivation and inspiration for students to learn?Please rate out of 5</p>
-                     <input type="radio" name="approachable" value="1" style="margin-right:10px; margin-left:10px">Very poor
+                    <p class="help-block">Motivation and inspiration for students to learn?</p>
+                     <input type="radio" name="approachable" value="1" style="margin-right:10px; margin-left:10px" required>Very poor
                     <input type="radio" name="approachable" value="2" style="margin-right:10px; margin-left:10px">Poor
                     <input type="radio" name="approachable" value="3" style="margin-right:10px; margin-left:10px">Good
                     <input type="radio" name="approachable" value="4" style="margin-right:10px; margin-left:10px">Very Good
@@ -223,8 +201,8 @@ include 'sidebar-st.php';
                   <label class="col-sm-2 control-label">Practical Knowledge</label>
                     <div class="col-sm-10">
                       <p class="help-block">Support for thr development of the student skill</p>
-                    <p class="help-block">(a) Practical Demonstration (b)Hands on training. Please rate out of 5</p>
-                     <input type="radio" name="grading" value="1" style="margin-right:10px; margin-left:10px">Very poor
+                    <p class="help-block">(a) Practical Demonstration (b)Hands on training.</p>
+                     <input type="radio" name="grading" value="1" style="margin-right:10px; margin-left:10px" required>Very poor
                     <input type="radio" name="grading" value="2" style="margin-right:10px; margin-left:10px">Poor
                     <input type="radio" name="grading" value="3" style="margin-right:10px; margin-left:10px">Good
                     <input type="radio" name="grading" value="4" style="margin-right:10px; margin-left:10px">Very Good
@@ -235,8 +213,8 @@ include 'sidebar-st.php';
                   <div class="form-group">
                   <label class="col-sm-2 control-label">Clarity</label>
                     <div class="col-sm-10">
-                    <p class="help-block">Clarity of expectation of students?Please rate out of 5</p>
-                     <input type="radio" name="clarity" value="1" style="margin-right:10px; margin-left:10px">Very poor
+                    <p class="help-block">Clarity of expectation of students?</p>
+                     <input type="radio" name="clarity" value="1" style="margin-right:10px; margin-left:10px" required>Very poor
                     <input type="radio" name="clarity" value="2" style="margin-right:10px; margin-left:10px">Poor
                     <input type="radio" name="clarity" value="3" style="margin-right:10px; margin-left:10px">Good
                     <input type="radio" name="clarity" value="4" style="margin-right:10px; margin-left:10px">Very Good
@@ -247,8 +225,8 @@ include 'sidebar-st.php';
                   <div class="form-group">
                   <label class="col-sm-2 control-label">Feedback</label>
                     <div class="col-sm-10">
-                    <p class="help-block">Feedback provided on students Please rate out of 5</p>
-                     <input type="radio" name="feedform" value="1" style="margin-right:10px; margin-left:10px">Very poor
+                    <p class="help-block">Feedback provided on students.</p>
+                     <input type="radio" name="feedform" value="1" style="margin-right:10px; margin-left:10px" required>Very poor
                     <input type="radio" name="feedform" value="2" style="margin-right:10px; margin-left:10px">Poor
                     <input type="radio" name="feedform" value="3" style="margin-right:10px; margin-left:10px">Good
                     <input type="radio" name="feedform" value="4" style="margin-right:10px; margin-left:10px">Very Good
@@ -259,8 +237,8 @@ include 'sidebar-st.php';
                   <div class="form-group">
                   <label class="col-sm-2 control-label">Helping</label>
                     <div class="col-sm-10">
-                    <p class="help-block">Willingness to offer help and advice to students? Please rate out of 5</p>
-                    <input type="radio" name="advice" value="1" style="margin-right:10px; margin-left:10px">Very poor
+                    <p class="help-block">Willingness to offer help and advice to students?</p>
+                    <input type="radio" name="advice" value="1" style="margin-right:10px; margin-left:10px" required>Very poor
                     <input type="radio" name="advice" value="2" style="margin-right:10px; margin-left:10px">Poor
                     <input type="radio" name="advice" value="3" style="margin-right:10px; margin-left:10px">Good
                     <input type="radio" name="advice" value="4" style="margin-right:10px; margin-left:10px">Very Good
@@ -276,10 +254,13 @@ include 'sidebar-st.php';
                       <span class="help-block">Enter the Code in the box to continue .( To let us know you are not a robot)</span>
                     </div>
                   </div>  -->
-				
+            <div class="form-group">
+            <div class="col-sm-10" style="margin:10px;">
 				    <button type="submit" class="btn btn-primary" name="feedback">Submit</button>
-                </form>
-              </div>
+            </div>
+            </div>
+            </form>
+            </div>
             </section>
           
            

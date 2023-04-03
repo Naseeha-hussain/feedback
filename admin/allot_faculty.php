@@ -103,7 +103,8 @@ include 'sidebar.php';
                     <th><i class="icon_calendar"></i> Subject Code</th>
                     <th><i class="icon_mail_alt"></i> Semester</th>
 					     <th><i class="icon_mobile"></i> year</th>
-                    <th><i class="icon_pin_alt"></i>Alloted Faculty</th>
+                   <th><i class="icon_mobile"></i> Section</th>
+                   <th><i class="icon_pin_alt"></i>Alloted Faculty</th>
 					              <th><i class="icon_pin_alt"></i> Allot Faculty</th>
                    
 					 <th><i class="icon_cogs"></i> Action</th>
@@ -121,17 +122,20 @@ include 'sidebar.php';
 		  $s_code = $row['scode'];
 		   $s_sem = $row['ssem'];
 		    $s_yr = $row['sy'];
+        $s_sec=$row['sec'];
 			$s_faculty = $row['sfaculty'];
 			
 	// $ncid = md5($id);
 	 //} 
 						?>
                   <tr>
-				 
+				            
                     <td><?php echo  $sname; ?></td>
                     <td><?php echo $s_code; ?></td>
                     <td><?php echo $s_sem; ?></td>
                     <td><?php echo $s_yr; ?></td>
+                    <td><?php echo $s_sec; ?></td>
+                    
                     <td><?php echo $s_faculty; ?></td>
 					
 					

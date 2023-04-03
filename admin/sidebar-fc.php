@@ -3,7 +3,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="">
-            <a class="" href="faculty-report.php">
+            <a class="" href="view-feedback-fc.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>

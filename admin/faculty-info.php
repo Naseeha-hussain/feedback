@@ -70,7 +70,7 @@ if (isset($_POST["add-report"])) {
 
   <!-- container section start -->
   <section id="container" class="">
-   <?php include 'header-st.php';
+   <?php include 'header-fc.php';
 include 'sidebar-fc.php';
  ?>
     <!--sidebar end-->

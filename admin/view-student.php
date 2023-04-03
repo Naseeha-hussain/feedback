@@ -10,9 +10,10 @@ if(isset($_POST["add-student"])){
 $student_name=$_POST['student-name'];
 $student_email=$_POST['student-email'];
 $student_reg=$_POST['student-reg'];
-$student_dob=$_POST['student-dob'];
 $student_batch=$_POST['student-batch'];
 $student_sem=$_POST['student-sem'];
+$student_sec=$_POST['student-sec'];
+
 // $faculty_designation=$_POST['faculty-designation'];
 // $experience=$_POST['experience'];
 // $status=$_POST['status'];
@@ -29,7 +30,7 @@ $q=mysqli_query($confaculty,"SELECT * FROM student WHERE smail='".$student_email
 	//echo $messag;
     else 
 	{
-	 $sql="INSERT INTO student(sname,smail,sreg,sdob,sbatch,ssem) VALUES('$student_name','$student_email','$student_reg','$student_dob','$student_batch','$student_sem')";
+	 $sql="INSERT INTO student(sname,smail,sreg,sbatch,ssem,ssec) VALUES('$student_name','$student_email','$student_reg','$student_batch','$student_sem','$student_sec')";
 	// echo $sql;
 		$result=mysqli_query($confaculty,$sql);
 		$msg="Faculty is already added with the entered email address";
@@ -122,13 +123,13 @@ include 'sidebar.php';
               <table class="table table-striped table-advance table-hover">
                 <tbody>
                   <tr>
-				    <th><i class="icon_profile"></i> Full Name</th>
-                    <th><i class="icon_mail_alt"></i> Email</th>
-					     <th><i class="icon_mobile"></i> Regno</th>
-                    <th><i class="icon_pin_alt"></i> Date of birth</th>
-					<th><i class="icon_pin_alt"></i> Batch</th>
-					<th><i class="icon_pin_alt"></i> semester</th>               
-					<th><i class="icon_cogs"></i> Delete</th>
+				              <th><i class="icon_profile"></i> Full Name</th>
+                      <th><i class="icon_mail_alt"></i> Email</th>
+					            <th><i class="icon_mobile"></i> Regno</th>
+					            <th><i class="icon_pin_alt"></i> Batch</th>
+					            <th><i class="icon_pin_alt"></i> semester</th>  
+                      <th><i class="icon_pin_alt"></i>Section</th>             
+					            <th><i class="icon_cogs"></i> Delete</th>
                   </tr>
 				  <?php 
 						$subject_code=mysqli_query($confaculty,"SELECT * FROM student"); 
@@ -139,19 +140,20 @@ include 'sidebar.php';
          $s_code = $row['sid'];
         $s_name=$row['sname'];
         $s_email = $row['smail'];
-		$s_reg = $row['sreg'];
-        $s_dob=$row['sdob'];
+		   $s_reg = $row['sreg'];
         $s_batch = $row['sbatch'];
         $s_sem=$row['ssem'];
-	 
+	      $s_sec=$row['ssec'];
+        
 						?>
                   <tr>
                     <td><?php echo $s_name; ?></td>
                     <td><?php echo $s_email; ?></td>
                     <td><?php echo $s_reg; ?></td>
-                    <td><?php echo $s_dob; ?></td>
-					          <td><?php echo $s_batch; ?></td>
-					          <td><?php echo $s_sem; ?></td>
+                    <td><?php echo $s_batch; ?></td>
+					          <td><?php echo $s_sem; ?>
+                    </td><td><?php echo $s_sec; ?></td>
+					          
 					 <td>
                       <div class="btn-group">
                         <a class="btn btn-danger" href="delete_student.php?fc=<?php echo $s_code; ?>"><i class="icon_close_alt2"></i></a>

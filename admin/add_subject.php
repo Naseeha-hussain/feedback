@@ -11,8 +11,9 @@ $subject_name=$_POST['subject_name'];
 $subject_code=$_POST['subject_code'];
 $year=$_POST['year'];
 $semester=$_POST['semester'];
-    
-$q=mysqli_query($confaculty,"SELECT * FROM subject WHERE scode='".$subject_code."' "); 
+$section=$_POST['section'];
+  
+$q=mysqli_query($confaculty,"SELECT * FROM subject WHERE scode='".$subject_code."' && sec ='".$section."' "); 
 	$numrows1=mysqli_num_rows($q);
 	 
 	if($numrows1>0)  
@@ -24,7 +25,7 @@ $q=mysqli_query($confaculty,"SELECT * FROM subject WHERE scode='".$subject_code.
 	//echo $messag;
     else 
 	{
-	 $sql="INSERT INTO subject(sname,scode,sy,ssem,duration) VALUES('$subject_name','$subject_code','$year','$semester',now())";
+	 $sql="INSERT INTO subject(sname,scode,sy,ssem,sec,duration) VALUES('$subject_name','$subject_code','$year','$semester','$section',now())";
 	// echo $sql;
 		
 		$result=mysqli_query($confaculty,$sql);
@@ -41,11 +42,6 @@ $q=mysqli_query($confaculty,"SELECT * FROM subject WHERE scode='".$subject_code.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Faculty Feedback system in php mysql contact form">
-  <meta name="author" content="Dr Tutorial NoidaTut">
-  <meta name="keyword" content="free download faculty feedback, faculty feedback management system in php mysql, feedback system in php mysql">
-  <link rel="shortcut icon" href="https://noidatut.com/gs-title.ico"/>
-  <meta property="og:image" content="http://noidatut.com/dashboard/noida-tut-fav.JPG">
 
   <title>Add Subject in Faculty Feedback section php mysql</title>
 
@@ -125,11 +121,11 @@ include 'sidebar.php';
                     <label class="col-sm-2 control-label">Year </label>
                     <div class="col-sm-10">
                       <select class="form-control m-bot15" name="year">
+                                              <option></option>
                                               <option>1</option>
                                               <option>2</option>
-											  <option>3</option>
+											                        <option>3</option>
                                               <option>4</option>
-                                             <option>5</option>
                                              
                                           </select>
                     </div>
@@ -138,28 +134,31 @@ include 'sidebar.php';
                     <label class="col-sm-2 control-label">Semester </label>
                     <div class="col-sm-10">
                       <select class="form-control m-bot15" name="semester">
+                                              <option></option>
                                               <option>1</option>
                                               <option>2</option>
-											  <option>3</option>
+											                        <option>3</option>
                                               <option>4</option>
-                                             <option>5</option>
-											 <option>6</option>
+                                              <option>5</option>
+											                        <option>6</option>
                                               <option>7</option>
-											  <option>8</option>
+											                        <option>8</option>
                                               <option>9</option>
                                              <option>10</option>
                                              
                                           </select>
                     </div>
                   </div>
-				
-				  <!-- <div class="form-group">
-                    <label class="col-sm-2 control-label"><img src="captcha1.php"></label>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Section </label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="vercode">
-                      <span class="help-block">Enter the Code in the box to continue .( To let us know you are not a robot)</span>
+                       <select class="form-control m-bot15" name="section">
+                                              <option></option>
+                                              <option>A</option>
+                                              <option>B</option>
+                          </select>
                     </div>
-                  </div> -->
+                  </div>
 				    <button type="submit" class="btn btn-primary" name="add-faculty">Submit</button>
                 </form>
               </div>
