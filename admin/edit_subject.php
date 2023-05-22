@@ -28,7 +28,7 @@ $year=$_POST['year'];
 $semester=$_POST['semester'];
 $section=$_POST['section'];
     
-$sql1 = "UPDATE subject SET sname = '$subject_name', ssem= '$semester', sy = '$year' WHERE sid = ' $s_code' && sec ='$s_sec'";
+$sql1 = "UPDATE subject SET sname = '$subject_name', ssem= '$semester', sy = '$year' WHERE sid = ' $s_code' && sec ='$section'";
 //echo $sql1;
 $result=mysqli_query($confaculty,$sql1);
 $msg="Subject Updated";
@@ -45,11 +45,7 @@ $msg="Subject Updated";
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Faculty Feedback system in php mysql contact form">
-  <meta name="author" content="Dr Tutorial NoidaTut">
-  <meta name="keyword" content="free download faculty feedback, faculty feedback management system in php mysql, feedback system in php mysql">
-  <link rel="shortcut icon" href="https://noidatut.com/gs-title.ico"/>
-  <meta property="og:image" content="http://noidatut.com/dashboard/noida-tut-fav.JPG">
-
+  
   <title>Edit Subject in Faculty Feedback section php mysql</title>
 
   <!-- Bootstrap CSS -->

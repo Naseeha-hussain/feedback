@@ -2,6 +2,8 @@
  if(!isset($_SESSION)) 
     { 
         session_start(); 
+        
+        $reg=$_SESSION['sreg'];  
     } 
 if (isset($_SESSION["success"])) {
      $msg="Feedback Submitted,Thank You";
@@ -9,11 +11,13 @@ if (isset($_SESSION["success"])) {
 					  unset($_SESSION['success']);
     }
 require_once('fcon.php');
- $t = "SELECT DISTINCT ssem FROM Subject ORDER BY ssem ASC"; 
-   $sem = mysqli_query($confaculty, $t);
-        
-// if(isset($_POST["add-faculty"])){ 
 
+  //  $d="SELECT DISTINCT ssec FROM Subject";
+  //  $sec= mysqli_query($confaculty, $d);
+      
+    
+
+// if(isset($_POST["add-faculty"])){ 
 // $faculty_name=$_POST['faculty'];
 // $_SESSION["facultynm"] = $faculty_name;
 // 	//$msg="Faculty Updated";
@@ -23,11 +27,15 @@ if (isset($_POST["add-faculty"])) {
 
   $_SESSION['batch'] = $_POST['batch'];
   
+  $_SESSION['dept'] = $_POST['dept'];
   $_SESSION['subj'] = $_POST['subj'];
   $_SESSION['sem'] = $_POST['sem'];
+  
+  $_SESSION['sem'] = $_POST['sec'];
   $sem = $_POST['sem'];
+  $sec=$_POST['sec'];
   $_SESSION['sem'] = $sem;
-  $_SESSION['sec'] = $_POST['sec'];
+  $_SESSION['sec'] = $sec;
    
 
   header("Location: choose_subject.php");
@@ -71,44 +79,54 @@ if (isset($_POST["add-faculty"])) {
   <!-- Custom styles -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script>
-$(document).ready(function(){
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
+  <script type="text/javascript">
+
+  $(document).ready(function(){
     $('#semno').on('change', function(){
         var SemID = $(this).val();
         if(SemID){
             $.ajax({
                 type:'POST',
-                url:'ajaxData.php',
+                url:'./ajaxData.php',
                 data:'ssem='+SemID,
                 success:function(html){
                     $('#subj').html(html);
-                    $('#faculty').html('<option value="">Select subject first</option>'); 
+                    $('#faculty').html('<option value="">Select sem first</option>'); 
                 }
             }); 
-        }else{
+        }
+        else
+        {
             $('#subj').html('<option value="">Select Semester first</option>');
-            $('#faculty').html('<option value="">Select Subject first</option>'); 
+            $('#faculty').html('<option value="">Select Dept first</option>'); 
         }
     });
-    
-    // $('#subj').on('change', function(){
-    //     var SubjID = $(this).val();
-    //     if(SubjID){
+
+});
+
+
+    // $('#dept').on('change', function(){
+    //     var DeptID = $(this).val();
+    //     if(DeptID){
     //         $.ajax({
     //             type:'POST',
-    //             url:'ajaxData.php',
-    //             data:'s_name='+SubjID,
+    //             url:'./ajaxData.php',
+    //             data:'dept='+DeptID,
     //             success:function(html){
-    //                 $('#faculty').html(html);
+    //                 $('#subj').html(html);
+    //                 $('#faculty').html('<option value="">Select subject first</option>'); 
     //             }
     //         }); 
-    //     }
-    //     else{
-    //         $('#faculty').html('<option value="">Select  first</option>'); 
+    //     }else{
+    //         $('#subj').html('<option value="">Select Dept first</option>');
+    //         $('#faculty').html('<option value="">Select Subject first</option>'); 
     //     }
     // });
-});
+
 </script>
 </head>
 
@@ -152,13 +170,63 @@ include 'sidebar-st.php';
               <div class="form-group">
                      <div class="col-sm-2 control-label">Batch </div>
                     <div class="col-sm-8">
-                      <select class="form-control m-bot15" name="batch" required>
-					  <option></option> 
-            <option>2020-24</option> 
-            <option>2021-25</option> 
-</select>
-</div>
-</div>    
+                      <?php
+                         if(strpos($reg,'0019',2)!=false){
+                                $batch="2019-2023";
+                             }
+                             else if(strpos($reg,'0020',2)!=false){
+                                $batch="2020-2024";
+                             }
+                             else if(strpos($reg,'0021',2)!=false){
+                                $batch="2021-2025";
+                             }
+                             else if(strpos($reg,'0022',2)!=false){
+                                $batch="2022-2026";
+                             }
+                             else if(strpos($reg,'0023',2)!=false){
+                                $batch="2023-2027";
+                             }
+                             
+                             ?>
+                             <div class="col-sm-5" style="padding: 7px;">
+                        <?php echo $batch?>                  
+                      </div>
+                      </div>
+</div> 
+                      <?php
+                           if(strpos($reg,'103',5)!=false || strpos($reg,'126',5)!=false){
+                                $dep="CIVIL";
+                             }
+                             else if(strpos($reg,'104',5)!=false){
+                                $dep="CSE";
+                             }
+                             else if(strpos($reg,'105',5)!=false){
+                                $dep="EEE";
+                             }
+                             
+                             else if(strpos($reg,'205',5)!=false){
+                                $dep="IT";
+                             }
+                             
+                             else if(strpos($reg,'106',5)!=false){
+                                $dep="ECE";
+                             }
+                             else if(strpos($reg,'114',5)!=false){
+                                $dep="Mech";
+                             }
+                             else if(strpos($reg,'214',5)!=false){
+                                $dep="Bio-Tech";
+                             }
+                             else if(strpos($reg,'219',5)!=false){
+                                $dep="Petro";
+                             }
+                             else if(strpos($reg,'237',5)!=false){
+                                $dep="Pharma";
+                             }
+
+           $t = "SELECT DISTINCT ssem FROM Subject WHERE dept ='" .$dep. "' && batch='" .$batch. "' "; 
+          $sem = mysqli_query($confaculty, $t);
+          ?>
            <div class="form-group">
                     <div class="col-sm-2 control-label">semester</div>
                     <div class="col-sm-8">
@@ -176,22 +244,44 @@ include 'sidebar-st.php';
                   </select>
 					  </div>
           </div>
+          
+          <!-- <div class="form-group">
+                  <label class="col-sm-2 control-label">Select Dept</label>
+                  <div class="col-sm-8">
+                    <select id="dept" class="form-control m-bot15" name="dept" required >
+                      <option value="">Select Dept</option> 
+                       <?php 
+                            // if($dept->num_rows > 0){ 
+                            //   while($row = $dept->fetch_assoc()){  
+                            //         echo '<option value="'.$row['dept'].'">'.$row['dept'].'</option>'; 
+                            //   } 
+                            // }else{ 
+                            //     echo '<option value="">Dept not available</option>'; 
+                            // } 
+                      ?>
+                    </select>
+                    </div> 
+                    </div> -->
+
           <div class="form-group">
                   <label class="col-sm-2 control-label">Select Subject</label>
                   <div class="col-sm-8">
                     <select id="subj" class="form-control m-bot15" name="subj" required >
-                      <option value="">Select Semester First</option> 
+                      <option value="">Select sem First</option> 
                     </select>
                     </div> 
                     </div>
-                    
+
           <div class="form-group">
                   <label class="col-sm-2 control-label">Select Section</label>
                   <div class="col-sm-8">
                     <select id="section" class="form-control m-bot15" name="sec" required >
-                      <option></option> 
-                      <option value="A">A</option> 
-                      <option value="B">B</option> 
+                       <!-- <option value="">Select Sec</option>
+                        <option></option> -->
+                        <option></option>
+                        <option>A</option>
+                       <option>B</option>
+                       <option>TM</option>
                     
                     </select>
                     </div> 

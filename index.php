@@ -8,7 +8,7 @@
 	if(isset($_POST["submit"])){ 
 		$reg = $_POST['reg'];
 		$name = $_POST['name'];
-
+         
 		$t = "SELECT * FROM student WHERE sreg ='" . $reg . "'";
         $student = mysqli_query($confaculty, $t);
         $numrow = mysqli_num_rows($student);
@@ -85,8 +85,8 @@
 </script><br></p>
 				<div class="content3">
 					<ul>
-						<li><a class="" href="https://noidatut.com/"> Know More</a></li>
-						<li><a class="read" href="https://noidatut.com/st-subject-list.php"> Study Resources</a></li>
+						<li><a class="" href="#"> Know More</a></li>
+						<li><a class="read" href="#"> Study Resources</a></li>
 					</ul>
 				</div>
 			</div>

@@ -124,7 +124,6 @@ include 'sidebar.php';
                 <tbody>
                   <tr>
 				              <th><i class="icon_profile"></i> Full Name</th>
-                      <th><i class="icon_mail_alt"></i> Email</th>
 					            <th><i class="icon_mobile"></i> Regno</th>
 					            <th><i class="icon_pin_alt"></i> Batch</th>
 					            <th><i class="icon_pin_alt"></i> semester</th>  
@@ -139,7 +138,6 @@ include 'sidebar.php';
 	 {    
          $s_code = $row['sid'];
         $s_name=$row['sname'];
-        $s_email = $row['smail'];
 		   $s_reg = $row['sreg'];
         $s_batch = $row['sbatch'];
         $s_sem=$row['ssem'];
@@ -148,7 +146,6 @@ include 'sidebar.php';
 						?>
                   <tr>
                     <td><?php echo $s_name; ?></td>
-                    <td><?php echo $s_email; ?></td>
                     <td><?php echo $s_reg; ?></td>
                     <td><?php echo $s_batch; ?></td>
 					          <td><?php echo $s_sem; ?>

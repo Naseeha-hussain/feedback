@@ -7,6 +7,7 @@
 require_once('fcon.php');
 if(isset($_POST["add-faculty"])){ 
 
+	 $f_code = $row['fid'];
 $faculty_name=$_POST['faculty-name'];
 $faculty_email=$_POST['faculty-email'];
 $faculty_mobile=$_POST['faculty-mobile'];
@@ -15,23 +16,23 @@ $faculty_specialization=$_POST['faculty-specialization'];
 $faculty_designation=$_POST['faculty-designation'];
 $experience=$_POST['experience'];
 $status=$_POST['status'];
-$image=$_POST['image'];
-$q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fmail='".$faculty_email."' "); 
+//$image=$_POST['image'];
+$q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fcid='".$fcode."' "); 
 	$numrows1=mysqli_num_rows($q);
 	 
 	if($numrows1>0)  
     {  
-	$msg="Faculty is already added with the entered email address";
+	$msg="Faculty is already added with the entered no";
 	 echo "<script type='text/javascript'>alert('$msg');</script>"; 
 	 //exit('Already Registered Please refresh the page and go back'); 
 	 }
 	//echo $messag;
     else 
 	{
-	 $sql="INSERT INTO faculty(fname,fmail,fmob,fqual,fexp,specialization,pic,designation,status,date) VALUES('$faculty_name','$faculty_email','$faculty_mobile','$faculty_qualification','$experience','$faculty_specialization','$image','$faculty_designation','$status',now())";
+	 $sql="INSERT INTO faculty(fname,fqual,fexp,specialization,pic,designation,status,date) VALUES('$faculty_name','$faculty_qualification','$experience','$faculty_specialization','$image','$faculty_designation','$status',now())";
 	// echo $sql;
 		$result=mysqli_query($confaculty,$sql);
-		$msg="Faculty is already added with the entered email address";
+		$msg="Faculty is already added with the entered no";
 	 echo "<script type='text/javascript'>alert('$msg');</script>"; 
 
 	}
@@ -52,7 +53,6 @@ $q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fmail='".$faculty_email
 </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:image" content="http://noidatut.com/dashboard/noida-tut-fav.JPG">
 
   <title>Faculty List </title>
 
@@ -121,16 +121,13 @@ include 'sidebar.php';
               <table class="table table-striped table-advance table-hover">
                 <tbody>
                   <tr>
-                    <th><i class="icon_profile"></i> Profile</th>
-				    <th><i class="icon_profile"></i> Full Name</th>
-                   
-                    <th><i class="icon_mail_alt"></i> Email</th>
-					     <th><i class="icon_mobile"></i> Mobile</th>
+                    <th><i class="icon_profile"></i> ID</th>
+				            <th><i class="icon_profile"></i> Full Name</th>
                     <th><i class="icon_pin_alt"></i> Qualification</th>
-					<th><i class="icon_pin_alt"></i> Designation</th>
-					<th><i class="icon_pin_alt"></i> Status</th>               
+					          <th><i class="icon_pin_alt"></i> Designation</th>
+					          <th><i class="icon_pin_alt"></i> Status</th>               
                     <th><i class="icon_cogs"></i> Action</th>
-					<th><i class="icon_cogs"></i> Delete</th>
+					          <th><i class="icon_cogs"></i> Delete</th>
                   </tr>
 				  <?php 
 						$subject_code=mysqli_query($confaculty,"SELECT * FROM faculty"); 
@@ -138,14 +135,12 @@ include 'sidebar.php';
 						
  while($row=mysqli_fetch_assoc($subject_code))
 	 {
-	 $f_code = $row['fid'];
+	  $f_code = $row['fid'];
 		 $fname = $row['fname'];
-		  $f_email = $row['fmail'];
-		   $f_mobile = $row['fmob'];
 		    $f_qual = $row['fqual'];
 			 $f_exp = $row['fexp'];
 			  $f_sp = $row['specialization'];
-			   $f_pic = $row['pic'];
+			   //$f_pic = $row['pic'];
 			    $f_desig = $row['designation'];
 				 $f_status = $row['status'];
 				  $f_date = $row['date'];
@@ -153,19 +148,14 @@ include 'sidebar.php';
 	 //} 
 						?>
                   <tr>
-				  <td><img src="images/<?php if(empty($f_pic)){echo "profile.png";} else { echo $f_pic;} ?>" width="50" height="50"/></td>
+                    <td><?php echo $f_code; ?></td>
                     <td><?php echo $fname; ?></td>
-                   
-                    <td><?php echo $f_email; ?></td>
-                    <td><?php echo $f_mobile; ?></td>
-                    <td><?php echo $f_qual; ?></td>
-					<td><?php echo $f_desig; ?></td>
-					<td><?php echo $f_status; ?></td>
+                    <td><?php echo $f_qual; ?></td> 
+					          <td><?php echo $f_desig; ?></td>
+					          <td><?php echo $f_status; ?></td>
                     <td>
                       <div class="btn-group">
                         <a class="btn btn-primary" href="edit-faculty.php?sc=<?php echo $f_code;?>" target="_blank"><i class="icon_plus_alt2"></i></a>
-                       
-                        
                       </div>
                     </td>
 					 <td>

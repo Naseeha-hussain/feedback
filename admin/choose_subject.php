@@ -3,12 +3,30 @@ require_once('fcon.php');
  if(!isset($_SESSION)) 
     { 
         session_start(); 
+        
+        $reg=$_SESSION['sreg']; 
                      $t="SELECT sfaculty from subject WHERE sname='" . $_SESSION["subj"] . "' && sec='".$_SESSION["sec"]."' ";
                       $faculty = mysqli_query($confaculty, $t);
                       //$numrows1 = mysqli_num_rows($subject_code);
 
                       while ($row = mysqli_fetch_assoc($faculty)) {
-                        $fname = $row['sfaculty'];}
+                        $fname = $row['sfaculty'];
+                      }
+                      
+                         if(strpos($reg,'0019',2)!=false){
+                                $batch="2019-2023";
+                             }
+                             else if(strpos($reg,'0020',2)!=false){
+                                $batch="2020-2024";
+                             }
+                             else if(strpos($reg,'0021',2)!=false){
+                                $batch="2021-2025";
+                             }
+                             else if(strpos($reg,'0022',2)!=false){
+                                $batch="2022-2026";
+                             }
+                                              
+                      
                         // $ncid = md5($id);
                     
 		//$faculnm = $_SESSION["facultynm"];
@@ -28,7 +46,8 @@ if(isset($_POST["feedback"])){
 
   $stnm = $_SESSION['sname'];
   $stem = $_SESSION['sreg'];
-  $batch = $_SESSION['batch'];
+  $batchh=$batch;
+  //$batch = $_SESSION['batch'];
   $sem = $_SESSION['sem'];
 	$subj=$_SESSION['subj'];
 	$sec=$_SESSION['sec'];
@@ -44,7 +63,7 @@ if(isset($_POST["feedback"])){
   $feedform=$_POST['feedform'];
   $advice=$_POST['advice'];
 	//$feedback=$_POST['feedback'];
-	$sql="INSERT INTO feedback(batch,sem,sec,stnm,stem,fnm,sub,pun,con,eleq,syll,approach,grading,clk,fbf,adv,date) VALUES('$batch','$sem','$sec','$stnm','$stem','$faculty','$subj',$punctuality,$conceptual,$elequant,$syllabus,$approachable,$grading,$clarity,$feedform,$advice,now())";
+	$sql="INSERT INTO feedback(batch,sem,sec,stnm,stem,fnm,sub,pun,con,eleq,syll,approach,grading,clk,fbf,adv,date) VALUES('$batchh','$sem','$sec','$stnm','$stem','$faculty','$subj',$punctuality,$conceptual,$elequant,$syllabus,$approachable,$grading,$clarity,$feedform,$advice,now())";
 	$result=mysqli_query($confaculty,$sql);
 		$_SESSION["success"] = "Thank You for your valuable time " ;			
 			header("location: ./choose-faculty.php");
@@ -134,7 +153,8 @@ include 'sidebar-st.php';
                 <div class="form-group">
                      <label class="col-sm-2 control-label">Faculty</label>
                       <div class="col-sm-5" style="padding: 7px;">
-                        <?php echo $fname?>                  
+                        <?php echo $fname?>
+                        
                       </div>
                   </div>   
              

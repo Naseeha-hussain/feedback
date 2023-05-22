@@ -23,17 +23,14 @@
               <i class="icon_genius"></i>
               <span>Feedback Report</span>
             </a>
-<li>
+        </li>
+        <li>
             <a class="" href="../index.php">
                           <i class="menu-arrow arrow_carrot-right"></i>
                           <span>Log Out</span>
-
                       </a>
 
           </li>
-
-       
-
         </ul>
         <!-- sidebar menu end-->
       </div>

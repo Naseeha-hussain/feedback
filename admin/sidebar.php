@@ -41,6 +41,18 @@
               <li><a class="" href="add_subject.php">Add Subject</a></li>
            
             </ul>
+            <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_document_alt"></i>
+                          <span>Report</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+            <ul class="sub">
+              <li><a class="" href="view-Breport.php">Batch Wise</a></li>
+              <li><a class="" href="view-Dreport.php">Dept Wise</a></li>
+              <li><a class="" href="view-freport.php">Faculty Wise</a></li>
+            </ul>
+          </li>
           </li>
           <li>
             <a class="" href="view-feedback.php">

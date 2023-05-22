@@ -8,7 +8,6 @@ require_once('fcon.php');
 if(isset($_POST["add-student"])){ 
 
 $student_name=$_POST['student-name'];
-$student_email=$_POST['student-email'];
 $student_reg=$_POST['student-reg'];
 $student_batch=$_POST['student-batch'];
 $student_sem=$_POST['student-sem'];
@@ -16,19 +15,19 @@ $student_sec=$_POST['student-sec'];
 
 if(strlen($student_name)>=3){}
     
-$q=mysqli_query($confaculty,"SELECT * FROM student WHERE smail='".$student_email."' "); 
+$q=mysqli_query($confaculty,"SELECT * FROM student WHERE sreg='".$student_reg."' "); 
 	$numrows1=mysqli_num_rows($q);
 	 
 	if($numrows1>0)  
     {  
-	$msg="student is already added with the entered email address";
+	$msg="student is already added with the entered Register no";
 	 echo "<script type='text/javascript'>alert('$msg');</script>"; 
 	 //exit('Already Registered Please refresh the page and go back'); 
 	 }
 	//echo $messag;
     else 
 	{
-         $sql="INSERT INTO student(sname,smail,sreg,sbatch,ssem,ssec) VALUES('$student_name','$student_email','$student_reg','$student_batch','$student_sem','$student_sec')";
+         $sql="INSERT INTO student(sname,sreg,sbatch,ssem,ssec) VALUES('$student_name','$student_reg','$student_batch','$student_sem','$student_sec')";
 	// echo $sql;
 		//$target = "images/".basename($image);
 		//$tar = basename($image);
@@ -138,13 +137,6 @@ include 'sidebar.php';
                     </div>
                   </div>
 				   
-                <form class="form-horizontal " method="get">
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Student Email </label>
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" name="student-email" required>
-                    </div>
-                  </div>
                   
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Register number </label>

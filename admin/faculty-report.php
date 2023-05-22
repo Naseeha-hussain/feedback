@@ -8,12 +8,15 @@
         $semno = $_SESSION['semno'];
         $numrows1=0;
         $stotal=0;
+         $stotall=0;
         $spun=0;
         $datapoints=array(array());
-        
+        $arrayTotal=array();
+        $arraySubject = array();
+        $arrayNoFeedback = array();
     } 
-
 require_once('fcon.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,88 +103,90 @@ include 'sidebar-fc.php';
             <li>Name of the Staff : <?php echo  $name; ?></li>
             <li>Dept of the staff: <?php echo  $dept; ?></li>
             <li>Batch: <?php echo  $batch;?></li>
-            <li>Semester: <?php echo  $semno;?></li>
-              <?php $feed=mysqli_query($confaculty,"SELECT * FROM feedback WHERE fnm='" .$name. "' && sem='" .$semno."' && batch='" .$batch."'"); 
+            <?php 
+            $feed=mysqli_query($confaculty,"SELECT * FROM feedback WHERE fnm='" .$name. "' && batch='" .$batch."'"); 
               $numrows1=mysqli_num_rows($feed);	
+                
               $stotal=0;
+              if($numrows1 > 0){
+                
               while($row=mysqli_fetch_assoc($feed)){
-	        $fbid = $row['fbid'];
-	        $sname = $row['stnm'];
-	        $sem = $row['stem'];
-	        $fname = $row['fnm'];
-	        $sub = $row['sub'];
-	        $pun = $row['pun'];
-          $spun +=$pun;
-			$con = $row['con'];
-			$eleq = $row['eleq'];
-			$syll = $row['syll'];
-			$approach = $row['approach'];
-			$grading = $row['grading'];
-      $clarity=$row['clk'];
-      $feedform=$row['fbf'];
-      $advice=$row['adv'];
-      $total = $pun+$con+$eleq+$syll+$approach+$grading+$clarity+$feedform+$advice;	
-      $stotal +=$total;
-   }
-   $stotal=$stotal/$numrows1;
-   $spun = $spun/$numrows1;
-   $datapoints = array(array("y"=>$total,"label"=>"total"),array("y"=>$stotal,"label"=>"Average"),array("y"=>$con,"label"=>"Concept"));
-
-            ?>				
-            <li>Subject = <?php echo $sub?></li>	
-            <li>No of Feedback = <?php echo $numrows1?></li>
-            <li>Average(/45) = <?php echo $stotal?></li>
-  </ul>
-  </form>
-  <a href="../TCPDF-main/generatepdf.php"><input class="btn btn-primary" name="submitpdf" value="Download PDF"></a>
-
-
-  <div id ="chartContainer" style="height:370px ;width: 100%;"></div>
-  <script>
-    window.onload = function(){
-      var chart = new CanvasJS.Chart("chartContainer",{
-        animationEnabled:true,
-        title:{
-          text:"FeedBack Analysis"
-        },
-        axisY:{
-          title:"Questions",
-          includeZero:true,
-        },
-        data:[{
-          type:"bar",
-          indexLabelPlacement: "inside",
-          indexLabelFontWeight: "bolder",
-          indexLabelFontColor: "White",
-          dataPoints:
-          <?php echo json_encode($datapoints,JSON_NUMERIC_CHECK);?>
-        }]
-      });
-      chart.render();
-    } 
-  </script>
-  <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-              <!-- <table class="table table-striped table-advance table-hover">
-                <tbody>
-                  <tr>
-                   
-				    <th><i class="icon_profile"></i> Subject Name</th>
-                    <th><i class="icon_calendar"></i> Subject Code</th>
-                    <th><i class="icon_mail_alt"></i> Semester</th>
-					<th><i class="icon_mobile"></i> year</th>
-                    <th><i class="icon_pin_alt"></i> Faculty</th>
-					<th><i class="icon_pin_alt"></i> Allot Faculty</th>
-                    <th><i class="icon_cogs"></i> Edit Subject</th>
-					 <th><i class="icon_cogs"></i> Delete Subject</th>
-                  </tr>
-              
-                </tbody>
-              </table> -->
-			  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<!-- responsivenoida -->
+	                      $fbid = $row['fbid'];
+	                      $sname = $row['stnm'];
+	                      $sem = $row['stem'];
+	                      $fname = $row['fnm'];
+	                       $sub = $row['sub'];
+	                       $pun = $row['pun'];
+                          $spun +=$pun;
+			                    $con = $row['con'];
+		                     	$eleq = $row['eleq'];
+		                     	$syll = $row['syll'];
+			                    $approach = $row['approach'];
+			                    $grading = $row['grading'];
+                          $clarity=$row['clk'];
+                          $feedform=$row['fbf'];
+                          $advice=$row['adv'];
+                       $totall = $pun+$con+$eleq+$syll+$approach+$grading+$clarity+$feedform+$advice;	
+                       $stotall +=$totall;
+           }
+          }
+           $stotall=$stotall/$numrows1;
+          $tot_score=($stotall/45)*100;
+          $tot_score=round($tot_score,2);
+          
+           ?>
+            
+            <li>Total Score : <?php echo $tot_score?>%</li> 
+             
+              <?php
+                for($i=1;$i<9;$i++)
+                {
+                  
+               $feed=mysqli_query($confaculty,"SELECT * FROM feedback WHERE fnm='" .$name. "' && sem=$i && batch='" .$batch."'"); 
+              $numrows1=mysqli_num_rows($feed);	
+                
+              $stotal=0;
+              if($numrows1 == 0){
+                array_push($arrayTotal,0);
+                continue;
+              }
+              while($row=mysqli_fetch_assoc($feed)){
+	                      $fbid = $row['fbid'];
+	                      $sname = $row['stnm'];
+	                      $sem = $row['stem'];
+	                      $fname = $row['fnm'];
+	                       $sub = $row['sub'];
+	                       $pun = $row['pun'];
+                          $spun +=$pun;
+			                    $con = $row['con'];
+		                     	$eleq = $row['eleq'];
+		                     	$syll = $row['syll'];
+			                    $approach = $row['approach'];
+			                    $grading = $row['grading'];
+                          $clarity=$row['clk'];
+                          $feedform=$row['fbf'];
+                          $advice=$row['adv'];
+                       $total = $pun+$con+$eleq+$syll+$approach+$grading+$clarity+$feedform+$advice;	
+                       $stotal +=$total;
+           }
+          $stotal=$stotal/$numrows1;
+          $score=($stotal/45)*100;
+          $score=round($score,2);
+          $spun = $spun/$numrows1;
+          array_push($arrayTotal,$stotal);
+          array_push($arraySubject,$sub);
+          array_push($arrayNoFeedback,$numrows1);
+         			?>
+            <li>Subject : <?php echo $sub?></li>	
+            <li>No of Feedback : <?php echo $numrows1?></li>
+            <li>Score : <?php echo $score?>%</li> 
+          <?php } ?>
+          </ul>
+          </form>
+  <a href="../TCPDF-main/generatepdf.php">
+    <input class="btn btn-primary" name="submitpdf" value="Download PDF">
+  </a>
+  
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-5139634720777851"

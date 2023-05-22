@@ -28,36 +28,9 @@
         $spun=0;
         $datapoints=array(array());
         
-    } 
-
+    }
 require_once('../admin/fcon.php');
-  $feed=mysqli_query($confaculty,"SELECT * FROM feedback WHERE fnm='" .$name. "' && sem='" .$semno."' && batch='" .$batch."'"); 
-              $numrows1=mysqli_num_rows($feed);	
-              $stotal=0;
-              while($row=mysqli_fetch_assoc($feed)){
-	        $fbid = $row['fbid'];
-	        $sname = $row['stnm'];
-	        $sem = $row['stem'];
-	        $fname = $row['fnm'];
-	        $sub = $row['sub'];
-	        $pun = $row['pun'];
-          $spun +=$pun;
-			$con = $row['con'];
-			$eleq = $row['eleq'];
-			$syll = $row['syll'];
-			$approach = $row['approach'];
-			$grading = $row['grading'];
-      $clarity=$row['clk'];
-      $feedform=$row['fbf'];
-      $advice=$row['adv'];
-      $total = $pun+$con+$eleq+$syll+$approach+$grading+$clarity+$feedform+$advice;	
-      $stotal +=$total;
-   }
-   $stotal=$stotal/$numrows1;
-   $spun = $spun/$numrows1;
-   
-
-
+     
 /**
  * Creates an example PDF TEST document using TCPDF
  * @package com.tecnick.tcpdf
@@ -127,29 +100,141 @@ $pdf->AddPage();
 $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'color'=>array(196,196,196), 'opacity'=>1, 'blend_mode'=>'Normal'));
 
 // Set some content to print
-$html = <<<EOD
- <h3><center>UNIVERSITY COLLEGE OF ENGINEERING-BIT CAMPUS</center></h3>
-                <h4><center>Faculty REPORT</center></h4>
-                <ul>
-            <li>Name of the Staff : $name</li>
-            <li>Dept of the staff: $dept</li>
-            <li>Batch: $batch</li>
-            <li>Semester: $semno</li>
-            <li>Subject : $sub</li>	
-            <li>No of Feedback : $numrows1</li>
-            <li>Average(/45) : $stotal</li>
-  
-             </ul>
+$html =
+<<<EOD
+<h3 style="text-align:center;">UNIVERSITY COLLEGE OF ENGINEERING-BIT CAMPUS</h3>
+<h4 style="text-align:center;">FACULTY REPORT</h4>
+                
+            <p>Name of the Staff : $name</p>
+            <p>Dept of the staff: $dept</p>
+            <p>Batch: $batch</p>
+
 EOD;
 
-// Print text using writeHTMLCell()
 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+ $feed=mysqli_query($confaculty,"SELECT * FROM feedback WHERE fnm='" .$name. "' && batch='" .$batch."'"); 
+              $numrows1=mysqli_num_rows($feed);	
+              $stotal=0;
+              if($numrows1 > 0){
+              while($row=mysqli_fetch_assoc($feed)){
+	              $fbid = $row['fbid'];
+	              $sname = $row['stnm'];
+	              $sem = $row['stem'];
+	              $fname = $row['fnm'];
+	               $sub = $row['sub'];
+	              $pun = $row['pun'];
+          $spun +=$pun;
+			$con = $row['con'];
+			$eleq = $row['eleq'];
+			$syll = $row['syll'];
+			$approach = $row['approach'];
+			$grading = $row['grading'];
+      $clarity=$row['clk'];
+      $feedform=$row['fbf'];
+      $advice=$row['adv'];
+      $total = $pun+$con+$eleq+$syll+$approach+$grading+$clarity+$feedform+$advice;	
+      $stotal +=$total;
+   }
 
+   $stotal=$stotal/$numrows1;
+    $score=($stotal/45)*100;
+   $score=round($score,2);
+          
+   $spun = $spun/$numrows1;
+   $html=
+<<<EOD
+<p></p>
+<p>Total Score : $score %</p>
+<p></p>
+
+EOD; 
+$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+            
+   }
+    else{
+          $html=
+<<<EOD
+<p></p>
+<p>No feedback submiitted by the student.</p>
+<p></p>
+
+EOD; 
+$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+            
+
+    
+              }
+
+
+
+            for($i=1;$i<9;$i++)
+         {  
+       $feed=mysqli_query($confaculty,"SELECT * FROM feedback WHERE fnm='" .$name. "' && sem=$i && batch='" .$batch."'"); 
+              $numrows1=mysqli_num_rows($feed);	
+              $stotal=0;
+              if($numrows1 == 0){
+                continue;
+              }
+              while($row=mysqli_fetch_assoc($feed)){
+	              $fbid = $row['fbid'];
+	              $sname = $row['stnm'];
+	              $sem = $row['stem'];
+	              $fname = $row['fnm'];
+	               $sub = $row['sub'];
+	              $pun = $row['pun'];
+          $spun +=$pun;
+			$con = $row['con'];
+			$eleq = $row['eleq'];
+			$syll = $row['syll'];
+			$approach = $row['approach'];
+			$grading = $row['grading'];
+      $clarity=$row['clk'];
+      $feedform=$row['fbf'];
+      $advice=$row['adv'];
+      $total = $pun+$con+$eleq+$syll+$approach+$grading+$clarity+$feedform+$advice;	
+      $stotal +=$total;
+   }
+   $stotal=$stotal/$numrows1;
+    $score=($stotal/45)*100;
+   $score=round($score,2);
+          
+   $spun = $spun/$numrows1;
+$html=
+<<<EOD
+<hr/>
+   <h4>Subject :  $sub</h4>	
+   <p>No of Feedback :  $numrows1</p>
+   <p>Score : $score %</p>
+   <p></p>
+EOD; 
+$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+            
+
+}
+
+//$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+            
+
+// Print text using writeHTMLCell()
+$html_content =<<<EOD
+       
+<p>
+       <p style="text-align:left;">IQAC-Coordinator</p>
+<p style="text-align:right;">DEAN</p>
+</p>
+EOD;
+   
+ //$tcpdf->xfootertext($html_content);
+//$pdf->writeHTMLCell(0, 0, '', '', $html_content, 0, 0, false,true, "R", true);
+//$pdf->SetY(-0.5);  
+    
+$pdf->writeHTML($html_content, false, false, false, true,);
+//$pdf->SetY(8);
 // ---------------------------------------------------------
 
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
-$pdf->Output('example_001.pdf', 'I');
+$pdf->Output('Report.pdf', 'I');
 
 //============================================================+
 // END OF FILE

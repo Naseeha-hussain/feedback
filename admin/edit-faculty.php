@@ -25,9 +25,9 @@ if (isset($_GET['sc']))
  while($row=mysqli_fetch_assoc($subject_code))
 	 {
 	 $f_code = $row['fid'];
-		 $fname = $row['fname'];
-		  $f_email = $row['fmail'];
-		   $f_mobile = $row['fmob'];
+		  $fname = $row['fname'];
+		//   $f_email = $row['fmail'];
+		//    $f_mobile = $row['fmob'];
 		    $f_qual = $row['fqual'];
 			 $f_exp = $row['fexp'];
 			  $f_sp = $row['specialization'];
@@ -42,48 +42,48 @@ if (isset($_GET['sc']))
 if(isset($_POST["add-faculty"])){ 
 
 $faculty_name=$_POST['faculty-name'];
-$faculty_email=$_POST['faculty-email'];
-$faculty_mobile=$_POST['faculty-mobile'];
+// $faculty_email=$_POST['faculty-email'];
+// $faculty_mobile=$_POST['faculty-mobile'];
 $faculty_qualification=$_POST['faculty-qualification'];
 $faculty_specialization=$_POST['faculty-specialization'];
 $faculty_designation=$_POST['faculty-designation'];
 $experience=$_POST['experience'];
 $status=$_POST['status'];
-//$image=$_POST['image'];
-$image = $_FILES['image']['name'];
-    if(empty($image)){                        
+// //$image=$_POST['image'];
+// $image = $_FILES['image']['name'];
+//     if(empty($image)){                        
 //$q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fmail='".$faculty_email."' "); 
 	//$numrows1=mysqli_num_rows($q);
-$sql1 = "UPDATE faculty SET fname = '$faculty_name', fmob= '$faculty_mobile', fqual = '$faculty_qualification', fexp = '$experience', specialization = '$faculty_specialization', designation = '$faculty_designation', status = '$status' WHERE fid = ' $s_code'";
+$sql1 = "UPDATE faculty SET fname = '$faculty_name', fqual = '$faculty_qualification', fexp = '$experience', specialization = '$faculty_specialization', designation = '$faculty_designation', status = '$status' WHERE fid = ' $s_code'";
 //echo $sql1;
 $result=mysqli_query($confaculty,$sql1);
 $msg="Faculty Updated";
 	 echo "<script type='text/javascript'>alert('$msg');</script>"; 
-}
-	else { //$sql="INSERT INTO faculty(fname,fmail,fmob,fqual,fexp,specialization,pic,designation,status,date) VALUES('$faculty_name','$faculty_email','$faculty_mobile','$faculty_qualification','$experience','$faculty_specialization','$image','$faculty_designation','$status',now())";
-	// echo $sql;
-		$target = "images/".basename($image);
-		$tar = basename($image);
-		$check = getimagesize($_FILES["image"]["tmp_name"]);
-		 $ext = pathinfo($target, PATHINFO_EXTENSION);
-	$d = "png";
-	 $e = "jpeg";
-	 $f = "jpg";
+// }
+// 	else { //$sql="INSERT INTO faculty(fname,fmail,fmob,fqual,fexp,specialization,pic,designation,status,date) VALUES('$faculty_name','$faculty_email','$faculty_mobile','$faculty_qualification','$experience','$faculty_specialization','$image','$faculty_designation','$status',now())";
+// 	// echo $sql;
+// 		$target = "images/".basename($image);
+// 		$tar = basename($image);
+// 		$check = getimagesize($_FILES["image"]["tmp_name"]);
+// 		 $ext = pathinfo($target, PATHINFO_EXTENSION);
+// 	$d = "png";
+// 	 $e = "jpeg";
+// 	 $f = "jpg";
 	
-	// echo $ext;
-	 if  ( $ext == $e or $ext == $f or $ext == $d  )
-	 {
-		move_uploaded_file($_FILES['image']['tmp_name'], $target);
-		}
-		$sql1 = "UPDATE faculty SET fname = '$faculty_name', fmob= '$faculty_mobile', fqual = '$faculty_qualification', fexp = '$experience', specialization = '$faculty_specialization', designation = '$faculty_designation', status = '$status', pic = '$image' WHERE fid = ' $s_code'";
-		echo $sql1;
-		$result=mysqli_query($confaculty,$sql1);
-		$msg="Faculty Updated";
-	 echo "<script type='text/javascript'>alert('$msg');</script>"; 
+// 	// echo $ext;
+// 	 if  ( $ext == $e or $ext == $f or $ext == $d  )
+// 	 {
+// 		move_uploaded_file($_FILES['image']['tmp_name'], $target);
+// 		}
+// 		$sql1 = "UPDATE faculty SET fname = '$faculty_name', fmob= '$faculty_mobile', fqual = '$faculty_qualification', fexp = '$experience', specialization = '$faculty_specialization', designation = '$faculty_designation', status = '$status', pic = '$image' WHERE fid = ' $s_code'";
+		//echo $sql1;
+		//$result=mysqli_query($confaculty,$sql1);
+		//$msg="Faculty Updated";
+	 //echo "<script type='text/javascript'>alert('$msg');</script>"; 
 
 	
 	}
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -93,11 +93,7 @@ $msg="Faculty Updated";
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Faculty Feedback system in php mysql contact form">
-  <meta name="author" content="Dr Tutorial NoidaTut">
-  <meta name="keyword" content="free download faculty feedback, faculty feedback management system in php mysql, feedback system in php mysql">
-  <link rel="shortcut icon" href="https://noidatut.com/gs-title.ico"/>
-  <meta property="og:image" content="http://noidatut.com/dashboard/noida-tut-fav.JPG">
-
+  
   <title>Edit Faculty in Faculty Feedback section php mysql</title>
 
   <!-- Bootstrap CSS -->
@@ -158,9 +154,7 @@ include 'sidebar.php';
 	 {
 	 $f_code = $row['fid'];
 		 $fname = $row['fname'];
-		  $f_email = $row['fmail'];
-		   $f_mobile = $row['fmob'];
-		    $f_qual = $row['fqual'];
+		  $f_qual = $row['fqual'];
 			 $f_exp = $row['fexp'];
 			  $f_sp = $row['specialization'];
 			   $f_pic = $row['pic'];
@@ -180,7 +174,7 @@ include 'sidebar.php';
                     </div>
                   </div>
 				   
-                <form class="form-horizontal " method="get">
+                <!-- <form class="form-horizontal " method="get">
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Faculty Email( Cannot be changed) </label>
                     <div class="col-sm-10">
@@ -193,7 +187,7 @@ include 'sidebar.php';
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="faculty-mobile" value="<?php echo $f_mobile; ?>">
                     </div>
-                  </div>
+                  </div> -->
                 
                   
                   <div class="form-group">
@@ -234,21 +228,21 @@ include 'sidebar.php';
                                           </select>
                     </div>
                   </div>
-				  <div class="form-group">
+				  <!-- <div class="form-group">
                     <label class="col-sm-2 control-label">Faculty Image</label>
                     <div class="col-sm-10">
                       <label for="exampleInputFile">Upload Image</label>
                     <input type="file" id="exampleInputFile" name="image">
                     <p class="help-block">Only jpg and png images allowed</p>
                     </div>
-                  </div>
-				  <div class="form-group">
+                  </div> -->
+				  <!-- <div class="form-group">
                     <label class="col-sm-2 control-label"><img src="captcha1.php"></label>
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="vercode">
                       <span class="help-block">Enter the Code in the box to continue .( To let us know you are not a robot)</span>
                     </div>
-                  </div>
+                  </div> -->
 				    <button type="submit" class="btn btn-primary" name="add-faculty">Submit</button>
                 </form>
               </div>
@@ -264,17 +258,7 @@ include 'sidebar.php';
                       <!--color picker end-->
 
     <!--main content end-->
-    <div class="text-center">
-      <div class="credits">
-          <!--
-            All the links in the footer should remain intact.
-            You can delete the links only if you purchased the pro version.
-            Licensing information: https://bootstrapmade.com/license/
-            Purchase the pro version form: https://bootstrapmade.com/buy/?theme=NiceAdmin
-          -->
-          Designed by <a href="https://www.noidatut.com/">Dr. Aadarsh Malviya</a>
-        </div>
-    </div>
+   
   </section>
   <!-- container section end -->
   <!-- javascripts -->

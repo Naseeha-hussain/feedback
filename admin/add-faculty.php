@@ -9,8 +9,8 @@ if(isset($_POST["add-faculty"])){
 
 $faculty_id=$_POST['faculty-id'];
 $faculty_name=$_POST['faculty-name'];
-$faculty_email=$_POST['faculty-email'];
-$faculty_mobile=$_POST['faculty-mobile'];
+// $faculty_email=$_POST['faculty-email'];
+// $faculty_mobile=$_POST['faculty-mobile'];
 $faculty_qualification=$_POST['faculty-qualification'];
 $faculty_specialization=$_POST['faculty-specialization'];
 $faculty_designation=$_POST['faculty-designation'];
@@ -19,7 +19,7 @@ $status=$_POST['status'];
 //$image=$_POST['image'];
 //$image = $_FILES['image']['name'];
     
-$q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fmail='".$faculty_email."' "); 
+$q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fcid='".$faculty_id."' "); 
 	$numrows1=mysqli_num_rows($q);
 	 
 	if($numrows1>0)  
@@ -31,7 +31,7 @@ $q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fmail='".$faculty_email
 	//echo $messag;
     else 
 	{
-	 $sql="INSERT INTO faculty(fcid,fname,fmail,fmob,fqual,fexp,specialization,designation,status,date) VALUES($faculty_id,'$faculty_name','$faculty_email','$faculty_mobile','$faculty_qualification','$experience','$faculty_specialization','$faculty_designation','$status',now())";
+	 $sql="INSERT INTO faculty(fcid,fname,fqual,fexp,specialization,designation,status,date) VALUES($faculty_id,'$faculty_name','$faculty_qualification','$experience','$faculty_specialization','$faculty_designation','$status',now())";
 	// echo $sql;
 	// 	$target = "images/".basename($image);
 	// 	//$tar = basename($image);
@@ -68,7 +68,6 @@ $q=mysqli_query($confaculty,"SELECT * FROM faculty WHERE fmail='".$faculty_email
 </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:image" content="http://noidatut.com/dashboard/noida-tut-fav.JPG">
 
   <title>Add Faculty in Faculty Feedback section php mysql</title>
 
@@ -148,7 +147,7 @@ include 'sidebar.php';
                       <input type="text" class="form-control" name="faculty-name" required>
                     </div>
                   </div>
-                <form class="form-horizontal " method="get">
+                <!-- <form class="form-horizontal " method="get">
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Faculty Email </label>
                     <div class="col-sm-10">
@@ -162,7 +161,7 @@ include 'sidebar.php';
                       <input type="text" class="form-control" name="faculty-mobile">
                     </div>
                   </div>
-                
+                 -->
                   
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Highest Qualification </label>

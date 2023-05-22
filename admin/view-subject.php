@@ -133,7 +133,7 @@ include 'sidebar.php';
 					          <th><i class="icon_cogs"></i> Delete Subject</th>
                   </tr>
 				  <?php 
-						$subj=mysqli_query($confaculty,"SELECT * FROM subject"); 
+						$subj=mysqli_query($confaculty,"SELECT * FROM subject ORDER BY ssem,sec ASC"); 
 						$numrows1=mysqli_num_rows($subj);						
 						
  while($row=mysqli_fetch_assoc($subj))

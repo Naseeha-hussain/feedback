@@ -113,7 +113,7 @@ include 'sidebar-fc.php';
 </select>
 </div>
 </div>    
-           <div class="form-group">
+           <!-- <div class="form-group">
                     <div class="col-sm-2 control-label">semester</div>
                     <div class="col-sm-10">
                       <select class="form-control m-bot15" name="semno" required>
@@ -128,7 +128,7 @@ include 'sidebar-fc.php';
             <option>8</option>  
 </select>
 </div>
-</div>     <div class="form-group">
+</div>  --><div class="form-group"> 
                     <div class="col-sm-2 control-label">Dept </div>
                     <div class="col-sm-10">
                       <select class="form-control m-bot15" name="dept" required>

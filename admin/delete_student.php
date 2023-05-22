@@ -113,8 +113,7 @@ include 'sidebar.php';
  while($row=mysqli_fetch_assoc($subj))
 	 {
          $s_name=$row['sname'];
-        $s_email = $row['smail'];
-		$s_reg = $row['sreg'];
+		     $s_reg = $row['sreg'];
          $s_batch = $row['sbatch'];
         $s_sem=$row['ssem'];
 	      $s_sec=$row['ssec'];
@@ -132,7 +131,6 @@ include 'sidebar.php';
                   <tr>
                     
                     <td><?php echo $s_name; ?></td>
-                    <td><?php echo $s_email; ?></td>
                     <td><?php echo $s_reg; ?></td>
                     <td><?php echo $s_batch; ?></td>
 				            <td><?php echo $s_sem; ?></td>
